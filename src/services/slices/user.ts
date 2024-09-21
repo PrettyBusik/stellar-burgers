@@ -7,6 +7,7 @@ import {
   logoutApi,
   getUserApi
 } from '../../utils/burger-api';
+import { setCookie } from '../../utils/cookie';
 
 // type for initial state
 type TUserState = {
@@ -53,6 +54,8 @@ const userSlice = createSlice({
         state.isAuthChecked = true;
         state.error = null;
         state.userData = action.payload.user;
+        localStorage.setItem('refreshToken', action.payload.refreshToken);
+        setCookie('accessToken', action.payload.accessToken);
       })
       .addCase(registerUser.rejected, (state, action) => {
         state.error = action.error?.message || null;
@@ -80,6 +83,8 @@ const userSlice = createSlice({
         state.isAuthChecked = true;
         state.error = null;
         state.userData = action.payload.user;
+        localStorage.setItem('refreshToken', action.payload.refreshToken);
+        setCookie('accessToken', action.payload.accessToken);
       })
       .addCase(loginUser.rejected, (state, action) => {
         state.isAuthChecked = false;
