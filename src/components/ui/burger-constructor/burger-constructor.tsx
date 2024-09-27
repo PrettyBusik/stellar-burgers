@@ -20,7 +20,7 @@ export const BurgerConstructorUI: FC<BurgerConstructorUIProps> = ({
 }) => (
   <section className={styles.burger_constructor}>
     {constructorItems.bun ? (
-      <div className={`${styles.element} mb-4 mr-4`}>
+      <div className={`${styles.element} mb-4 mr-4`} data-cy='selected-bun'>
         <ConstructorElement
           type='top'
           isLocked
@@ -41,6 +41,7 @@ export const BurgerConstructorUI: FC<BurgerConstructorUIProps> = ({
         constructorItems.ingredients.map(
           (item: TConstructorIngredient, index: number) => (
             <BurgerConstructorElement
+              data-cy='selected-ingredirent'
               ingredient={item}
               index={index}
               totalItems={constructorItems.ingredients.length}
@@ -82,6 +83,7 @@ export const BurgerConstructorUI: FC<BurgerConstructorUIProps> = ({
       {/* Кнопка оформления заказа */}
       <Button
         htmlType='button'
+        data-cy='checkout-btn'
         type='primary'
         size='large'
         children='Оформить заказ'
