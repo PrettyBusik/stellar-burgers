@@ -2,16 +2,16 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { TOrder } from '../../utils/types';
 import { getFeedsApi } from '../../utils/burger-api';
 
-type TFeeds = {
+export type TFeeds = {
   orders: TOrder[];
   total: number;
-  totalForToday: number;
+  totalToday: number;
 };
 
 const initialState: TFeeds = {
   orders: [],
   total: 0,
-  totalForToday: 0
+  totalToday: 0
 };
 
 export const fetchGetFeed = createAsyncThunk('orders/fetchGetFeed', async () =>
@@ -25,13 +25,13 @@ const feedsSlice = createSlice({
   selectors: {
     getOrdersFeeds: (state) => state.orders,
     getTotalFeeds: (state) => state.total,
-    getTotalTodayFeeds: (state) => state.totalForToday
+    getTotalTodayFeeds: (state) => state.totalToday
   },
   extraReducers: (builder) => {
     builder.addCase(fetchGetFeed.fulfilled, (state, action) => {
       state.orders = action.payload.orders;
       state.total = action.payload.total;
-      state.totalForToday = action.payload.totalToday;
+      state.totalToday = action.payload.totalToday;
     });
   }
 });

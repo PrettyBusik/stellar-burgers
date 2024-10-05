@@ -7,7 +7,7 @@ import {
   logoutApi,
   getUserApi
 } from '../../utils/burger-api';
-import { setCookie } from '../../utils/cookie';
+import { deleteCookie, setCookie } from '../../utils/cookie';
 
 // type for initial state
 type TUserState = {
@@ -92,7 +92,11 @@ const userSlice = createSlice({
       });
 
     //   logout
-    builder.addCase(logoutUser.fulfilled, (state) => (state = initialState));
+    builder.addCase(logoutUser.fulfilled, (state) => {
+      localStorage.clear();
+      deleteCookie('accessToken');
+      return initialState;
+    });
 
     // update user's info
     builder
