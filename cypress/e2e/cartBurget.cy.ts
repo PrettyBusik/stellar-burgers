@@ -1,7 +1,7 @@
 import ingredients from '../fixtures/ingredients.json';
 
 describe('проверяем доступность приложения', function() {
-    it('сервис должен быть доступен по адресу localhost:5173', function() {
+    it('сервис должен быть доступен по адресу localhost:4000', function() {
         cy.visit('http://localhost:4000');
     });
 });
@@ -29,6 +29,9 @@ describe('Ingredients API', () => {
 
     it('should add ingredient to the constructor', () => {
         cy.visit('/');
+        cy.get('[data-cy="selected-bun"]').should('not.exist');
+        cy.get('[data-cy="selected-ingredient"]').should('not.exist');
+
         const bun= "Краторная булка N-200i";
         const cartWithIngredient=cy.get('[data-cy="ingredient-wrapper"]').contains( bun).parent('[data-cy="ingredient-wrapper"]');
         const addButton= cartWithIngredient.contains('Добавить')
@@ -43,6 +46,8 @@ describe('Ingredients API', () => {
         const cartWithIngredient=cy.get('[data-cy="ingredient-wrapper"]').contains( bun);
         cartWithIngredient.click();
         cy.contains('Детали ингредиента').should('exist')
+
+        cy.get('[data-cy="ingredient-name"]').should('contain.text', bun);
 
         cy.get('[data-cy="modal-close-btn"').click()
         cy.contains('Детали ингредиента').should('not.exist')
